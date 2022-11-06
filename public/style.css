@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'CaskaydiaCove';
+    src: url('http://localhost/fonts/CaskaydiaCoveNerdFontCompleteRegular.otf');
+}
+
+body {
+    font-family: 'CaskaydiaCove';
+}

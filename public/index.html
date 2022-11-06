@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script type='text/javascript' src='./scripts/subnet.js'></script>
+        <script type='text/javascript' src='./scripts/bootstrap.min.js'></script>
+        <link type="text/css" rel="stylesheet" href="./style.css">
+        <link rel="icon" type="image/x-icon" href="./favicon.ico">
+        <script>
+        function calc() {
+            var formData = new FormData(document.querySelector('form'))
+            let calc = new SubnetCalc(formData.get("ipv4"), formData.get("netmask"));
+            console.log(calc)
+            setData("addressPlaceholder", "Address:  " + calc.ipv4Address + " " + calc.addDots(calc.ipv4))
+            setData("netmaskPlaceholder", "Netmask:  " + calc.netmaskAddress + " " + calc.addDots(calc.netmask))
+            setData("wildcardPlaceholder", "Wildcard:  " + calc.wildcardAddress + " " + calc.addDots(calc.wildcard))    
+            setData("networkPlaceholder", "Network:  " + calc.networkAddress + `/${calc.netmaskInput}` + " " + calc.addDots(calc.network) +  ` (${calc.class}-Class)`)
+            setData("broadcastPlaceholder", "Broadcast:  " + calc.broadcastAddress + " " + calc.addDots(calc.broadcast))
+            setData("minHostPlaceholder", "minHost:  " + calc.hostMinAddress + " " + calc.addDots(calc.hostMin))
+            setData("maxHostPlaceholder", "maxHost:  " + calc.hostMaxAddress + " " + calc.addDots(calc.hostMax))
+            setData("hostsPlaceholder", "Hosts:  " + calc.hosts)
+            return false;
+        }
+
+        function setData(id, data){
+            document.getElementById(id).innerText = data;
+        }
+        </script>
+    </head>
+    <body>
+        <form onsubmit="return calc();" id="form">
+            <input type="text" id="ipv4" name="ipv4" placeholder="Host or Netaddress">/<input type="text" id="netmask" name="netmask" placeholder="Netmask z.B 24"><br>
+            <input type="submit" value="Submit">
+        </form>
+        <p id="addressPlaceholder">Address: </p>
+        <p id="netmaskPlaceholder">Netmask: </p>
+        <p id="wildcardPlaceholder">Wildcard: </p>
+        <p>=></p>
+        <p id="networkPlaceholder">Network: </p>
+        <p id="broadcastPlaceholder">Broadcast: </p>
+        <p id="minHostPlaceholder">minHost: </p>
+        <p id="maxHostPlaceholder">maxHost: </p>
+        <p id="hostsPlaceholder">Hosts/Network: </p>
+        
+    </body>
+</html>
