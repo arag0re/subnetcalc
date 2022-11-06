@@ -1,0 +1,26 @@
+{
+  "name": "subnetcalc",
+  "version": "1.0.0",
+  "description": "simple js based subnetcalculator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arag0re/subnetcalc.git"
+  },
+  "keywords": [
+    "subnetting",
+    "js"
+  ],
+  "author": "arag0re.eth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arag0re/subnetcalc/issues"
+  },
+  "homepage": "https://github.com/arag0re/subnetcalc#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
