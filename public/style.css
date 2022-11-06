@@ -5,4 +5,35 @@
 
 body {
     font-family: 'CaskaydiaCove';
+    color: green;
+}
+
+#mainBody {
+    width: 40%;
+    margin-left: 30%;
+    margin: 30%;
+}
+
+#submitButton {
+    border-color: green;
+    border-width: 3px;
+    border-radius: 7px;
+    margin-top: 25px;
+}
+
+#slash {
+    margin-top: 25px;
+    font-size: 20px;
+}
+
+.input {
+    border-color: green;
+    border-width: 3px;
+    border-radius: 7px;
+    color: green;
+}
+
+input,
+label {
+    display: block;
 }
