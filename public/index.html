@@ -10,6 +10,20 @@
         <link type="text/css" rel="stylesheet" href="style.css">
         <link rel="icon" type="image/x-icon" href="favicon.ico">
         <script>
+        function openCalc(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
         function calc() {
             var formData = new FormData(document.querySelector('form'))
             let calc = new SubnetCalc(formData.get("ipv4"), formData.get("netmask"));
@@ -31,35 +45,47 @@
         </script>
     </head>
     <body>
-        <div id="mainBody">
-            <form onsubmit="return calc();" id="form">
-                <section>
-                    <div style="float:left;margin-right:5px;">
-                        <label id="ipv4-label" for="ipv4">Address (IPv4)</label>
-                        <input type="text" class="input" id="ipv4" name="ipv4" placeholder="Host or Netaddress">
-                    </div>
-                    <div style="float:left;margin-right:10px;">
-                        <p id="slash">/</p>
-                    </div>
-                    <div style="float:left;margin-right:20px;">
-                        <label id="netmask-label" for="netmas">Netmask i.e 24</label>
-                        <input class="input" type="text" id="netmask" name="netmask" placeholder="Netmask z.B 24">
-                    </div>
-                    <div style="float:left;">
-                        <input id="submitButton" type="submit" value="Submit">
-                    </div>
-                    <br style="clear:both;" />
-                </section>    
-            </form>
-            <p id="addressPlaceholder">Address: </p>
-            <p id="netmaskPlaceholder">Netmask: </p>
-            <p id="wildcardPlaceholder">Wildcard: </p>
-            <p>=></p>
-            <p id="networkPlaceholder">Network: </p>
-            <p id="broadcastPlaceholder">Broadcast: </p>
-            <p id="minHostPlaceholder">minHost: </p>
-            <p id="maxHostPlaceholder">maxHost: </p>
-            <p id="hostsPlaceholder">Hosts/Network: </p>
+        <div class="center">
+            <div class="tab">
+                <button class="tablinks" onclick="openCalc(event, 'ipv4Calc')">IPv4</button>
+                <button class="tablinks" onclick="openCalc(event, 'ipv6Calc')">IPv6</button>
+            </div>
+            <div id="ipv4Calc" class="tabcontent">
+                <h3>IPv4</h3>
+                <form onsubmit="return calc();" id="form">
+                    <section>
+                        <div style="float:left;margin-right:5px;">
+                            <label id="ipv4-label" for="ipv4">Address (IPv4)</label>
+                            <input type="text" class="input" id="ipv4" name="ipv4" placeholder="Host or Netaddress">
+                        </div>
+                        <div style="float:left;margin-right:10px;">
+                            <p id="slash">/</p>
+                        </div>
+                        <div style="float:left;margin-right:20px;">
+                            <label id="netmask-label" for="netmas">Netmask i.e 24</label>
+                            <input class="input" type="text" id="netmask" name="netmask" placeholder="Netmask z.B 24">
+                        </div>
+                        <div style="float:left;">
+                            <input id="submitButton" type="submit" value="Submit">
+                        </div>
+                        <br style="clear:both;" />
+                    </section>
+                </form>
+                <p id="addressPlaceholder">Address: </p>
+                <p id="netmaskPlaceholder">Netmask: </p>
+                <p id="wildcardPlaceholder">Wildcard: </p>
+                <p>=></p>
+                <p id="networkPlaceholder">Network: </p>
+                <p id="broadcastPlaceholder">Broadcast: </p>
+                <p id="minHostPlaceholder">minHost: </p>
+                <p id="maxHostPlaceholder">maxHost: </p>
+                <p id="hostsPlaceholder">Hosts/Network: </p>
+            </div>
+            
+            <div id="ipv6Calc" class="tabcontent">
+                <h3>IPv6</h3>
+                <p>Paris is the capital of France.</p>
+            </div>
         </div>
     </body>
 </html>

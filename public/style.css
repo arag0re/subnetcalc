@@ -4,14 +4,54 @@
 }
 
 body {
+    background-color: black;
     font-family: 'CaskaydiaCove';
     color: green;
+    margin-top: 10%;
 }
 
-#mainBody {
-    width: 40%;
-    margin-left: 30%;
-    margin: 30%;
+.tab button:hover {
+    background-color: rgb(32, 32, 32);
+}
+
+.tab button.active {
+    background-color: rgb(32, 32, 32);
+}
+
+.tab {
+    overflow: hidden;
+    border: 1px solid green;
+    border-radius: 7px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-color: black;
+}
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid green;
+    border-radius: 7px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-top: none;
+}
+
+.center {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
 }
 
 #submitButton {
@@ -19,6 +59,12 @@ body {
     border-width: 3px;
     border-radius: 7px;
     margin-top: 25px;
+    background-color: black;
+}
+
+#submitButton:hover {
+    border-color: greenyellow;
+    color: greenyellow;
 }
 
 #slash {
@@ -31,6 +77,7 @@ body {
     border-width: 3px;
     border-radius: 7px;
     color: green;
+    background-color: black;
 }
 
 input,
