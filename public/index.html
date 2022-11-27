@@ -4,7 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <script type='text/javascript' src='scripts/subnet.js'></script>
+        <script type='text/javascript' src='scripts/v4.js'></script>
+        <script type='text/javascript' src='scripts/v6.js'></script>
         <script src="scripts/jquery-3.6.1.min.js"></script>
         <script type='text/javascript' src='scripts/bootstrap.min.js'></script>
         <link type="text/css" rel="stylesheet" href="style.css">
@@ -24,20 +25,53 @@
             evt.currentTarget.className += " active";
         }
 
-        function calc() {
-            var formData = new FormData(document.querySelector('form'))
-            let calc = new SubnetCalc(formData.get("ipv4"), formData.get("netmask"));
-            console.log(calc)
-            setData("addressPlaceholder", "Address:  " + calc.ipv4Address + " " + calc.addDots(calc.ipv4))
-            setData("netmaskPlaceholder", "Netmask:  " + calc.netmaskAddress + " " + calc.addDots(calc.netmask))
-            setData("wildcardPlaceholder", "Wildcard:  " + calc.wildcardAddress + " " + calc.addDots(calc.wildcard))    
-            setData("networkPlaceholder", "Network:  " + calc.networkAddress + `/${calc.netmaskInput}` + " " + calc.addDots(calc.network) +  ` (${calc.class}-Class)`)
-            setData("broadcastPlaceholder", "Broadcast:  " + calc.broadcastAddress + " " + calc.addDots(calc.broadcast))
-            setData("minHostPlaceholder", "minHost:  " + calc.hostMinAddress + " " + calc.addDots(calc.hostMin))
-            setData("maxHostPlaceholder", "maxHost:  " + calc.hostMaxAddress + " " + calc.addDots(calc.hostMax))
-            setData("hostsPlaceholder", "Hosts:  " + calc.hosts)
-            return false;
+        function calcV4() {
+            var formData = new FormData(document.getElementById('ipv4f'))
+            let ipv4Regex = new RegExp("^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$");
+            let netmaskRegex = new RegExp("^(?:[0-9]|[12][0-9]|3[01])$")
+            if(ipv4Regex.test(formData.get("ipv4"))){
+                if(netmaskRegex.test(formData.get("netmaskv4"))){
+                    let calc = new V4(formData.get("ipv4"), formData.get("netmaskv4"));
+                    //console.log(calc)
+                    setData("addressPlaceholder", "Address:  " + calc.ipv4Address + " " + calc.addDots(calc.ipv4))
+                    setData("netmaskPlaceholder", "Netmask:  " + calc.netmaskAddress + " " + calc.addDots(calc.netmask))
+                    setData("wildcardPlaceholder", "Wildcard:  " + calc.wildcardAddress + " " + calc.addDots(calc.wildcard))
+                    setData("networkPlaceholder", "Network:  " + calc.networkAddress + `/${calc.netmaskInput}` + " " + calc.addDots(calc.network) + ` (${calc.class}-Class)`)
+                    setData("broadcastPlaceholder", "Broadcast:  " + calc.broadcastAddress + " " + calc.addDots(calc.broadcast))
+                    setData("minHostPlaceholder", "minHost:  " + calc.hostMinAddress + " " + calc.addDots(calc.hostMin))
+                    setData("maxHostPlaceholder", "maxHost:  " + calc.hostMaxAddress + " " + calc.addDots(calc.hostMax))
+                    setData("hostsPlaceholder", "Hosts:  " + calc.hosts)
+                    return false;
+                } else {
+                    alert("Is not a valid number of subnetbits")
+                    return false
+                }
+            } else {
+                alert("Is not a valid IPv4-address")
+                return false
+            }
         }
+
+        function calcV6() {
+                var formData = new FormData(document.getElementById('ipv6f'))
+                let ipv6Regex = new RegExp("(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))");
+                let netmaskRegex = new RegExp("^0?\d{1,2}|1([0-1]\d|2[0-8])$")
+                if (ipv6Regex.test(formData.get("ipv6"))) {
+                        let calc = new V6(formData.get("ipv6"), formData.get("netmaskv6"));
+                        setData("addressPlaceholderV6", "Address:  " + calc.ipv6Address)
+                        setData("netmaskPlaceholderV6", "Netmask:  " + calc.netmaskAddress)
+                        setData("wildcardPlaceholderV6", "Wildcard:  " + calc.wildcardAddress)
+                        setData("networkPlaceholderV6", "Network:  " + calc.networkAddress + `/${calc.netmaskInput}` + ` (${calc.class}-Class)`)
+                        setData("broadcastPlaceholderV6", "Broadcast:  " + calc.broadcastAddress )
+                        setData("minHostPlaceholderV6", "minHost:  " + calc.hostMinAddress)
+                        setData("maxHostPlaceholderV6", "maxHost:  " + calc.hostMaxAddress)
+                        setData("hostsPlaceholderV6", "Hosts:  " + calc.hosts)
+                        return false;
+                    } else {
+                        alert("Is not a valid number of subnetbits")
+                        return false
+                    }
+            }
 
         function setData(id, data){
             document.getElementById(id).innerText = data;
@@ -52,7 +86,7 @@
             </div>
             <div id="ipv4Calc" class="tabcontent">
                 <h3>IPv4</h3>
-                <form onsubmit="return calc();" id="form">
+                <form onsubmit="return calcV4();" id="ipv4f">
                     <section>
                         <div style="float:left;margin-right:5px;">
                             <label id="ipv4-label" for="ipv4">Address (IPv4)</label>
@@ -62,8 +96,8 @@
                             <p id="slash">/</p>
                         </div>
                         <div style="float:left;margin-right:20px;">
-                            <label id="netmask-label" for="netmas">Netmask i.e 24</label>
-                            <input class="input" type="text" id="netmask" name="netmask" placeholder="Netmask z.B 24">
+                            <label id="netmask-label" for="netmaskv4">Netmask i.e 24</label>
+                            <input class="input" type="text" id="netmaskv4" name="netmaskv4" placeholder="24">
                         </div>
                         <div style="float:left;">
                             <input id="submitButton" type="submit" value="Submit">
@@ -84,7 +118,34 @@
             
             <div id="ipv6Calc" class="tabcontent">
                 <h3>IPv6</h3>
-                <p>Paris is the capital of France.</p>
+                <form onsubmit="return calcV6();" id="ipv6f">
+                    <section>
+                        <div style="float:left;margin-right:5px;">
+                            <label id="ipv6x^-label" for="ipv6">Address (IPv6)</label>
+                            <input type="text" class="input" id="ipv6" name="ipv6" placeholder="Host or Netaddress">
+                        </div>
+                        <div style="float:left;margin-right:10px;">
+                            <p id="slash">/</p>
+                        </div>
+                        <div style="float:left;margin-right:20px;">
+                            <label id="netmask-label" for="netmaskv6">Netmask i.e 64</label>
+                            <input class="input" type="text" id="netmaskv6" name="netmaskv6" placeholder="64">
+                        </div>
+                        <div style="float:left;">
+                            <input id="submitButton" type="submit" value="Submit">
+                        </div>
+                        <br style="clear:both;" />
+                    </section>
+                </form>
+                <p id="addressPlaceholderV6">Address: </p>
+                <p id="netmaskPlaceholderV6">Netmask: </p>
+                <p id="wildcardPlaceholderV6">Wildcard: </p>
+                <p>=></p>
+                <p id="networkPlaceholderV6">Network: </p>
+                <p id="broadcastPlaceholderV6">Broadcast: </p>
+                <p id="minHostPlaceholderV6">minHost: </p>
+                <p id="maxHostPlaceholderV6">maxHost: </p>
+                <p id="hostsPlaceholderV6">Hosts/Network: </p>
             </div>
         </div>
     </body>

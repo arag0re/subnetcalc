@@ -10,10 +10,8 @@ function reverseString(str) {
 *  @param decimal is expected Type Integer and should be higher then 255
 */
 function int32BitToByteStr(decimal) {
-    var rest = 0;
     var binStr = "";
     binStr = decimal.toString(2);
-    binStr = reverseString(binStr);
     let splittedStr = binStr.split("");
     if (splittedStr.length < 8) {
         let fullByte = []
@@ -30,7 +28,7 @@ function int32BitToByteStr(decimal) {
     return binStr
 }
 
-class SubnetCalc {
+class V4 {
     constructor (ipv4Input, netmaskInput) {
         this.ipv4Input = ipv4Input;
         this.netmaskInput = netmaskInput;
